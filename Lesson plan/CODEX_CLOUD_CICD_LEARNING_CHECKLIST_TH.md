@@ -34,7 +34,7 @@
 | 0 | Baseline, Learning Contract และ Cost Safety | เตรียมความพร้อม | [x] | 2026-07-13 |
 | 1 | Git Workflow และ Repository Discipline | เตรียม Repository | [x] | 2026-07-15 |
 | 2 | Backend แบบไม่ใช้ Docker | M1 | [x] | 2026-07-15 |
-| 3 | Docker Fundamentals | M2 | [ ] |  |
+| 3 | Docker Fundamentals | M2 | [x] | 2026-07-15 |
 | 4 | PostgreSQL, Persistence และ Migration | M3 (ส่วนข้อมูล) | [ ] |  |
 | 5 | Multi-Container Compose | M3 | [ ] |  |
 | 6 | MQTT Broker และ Device Simulator | M4 | [ ] |  |
@@ -128,25 +128,25 @@
 
 ### บทเรียนและงานลงมือทำ
 
-- [ ] Lesson 3.1 เขียนและอธิบาย Dockerfile ทีละบรรทัด
-- [ ] Lesson 3.2 เข้าใจ Build Context และสร้าง `.dockerignore`
-- [ ] Lesson 3.3 ทดลอง Container Lifecycle, log และ exit code
-- [ ] Lesson 3.4 ทดลองปัญหา Bind Address
-- [ ] Lesson 3.5 ใช้ Non-root User และตรวจ Image Size
-- [ ] อธิบาย Image, Container, Layer และ Cache ด้วยคำของตนเองได้
+- [x] Lesson 3.1 เขียนและอธิบาย Dockerfile ทีละบรรทัด
+- [x] Lesson 3.2 เข้าใจ Build Context และสร้าง `.dockerignore`
+- [x] Lesson 3.3 ทดลอง Container Lifecycle, log และ exit code
+- [x] Lesson 3.4 เข้าใจปัญหา Bind Address และใช้ `0.0.0.0` ใน container
+- [x] Lesson 3.5 ใช้ Non-root User และตรวจ Image Size
+- [x] อธิบาย Image, Container, Layer และ Cache ด้วยคำของตนเองได้
 
 ### เกณฑ์ผ่าน
 
-- [ ] Build Image สำเร็จ
-- [ ] Container รันได้
-- [ ] เข้าถึง API ผ่าน Published Port ได้
-- [ ] อธิบายความต่างของ `EXPOSE` กับ `-p` ได้
-- [ ] อธิบาย Layer Cache ได้
-- [ ] Container ไม่รันเป็น Root หากเหมาะสม
+- [x] Build Image สำเร็จ
+- [x] Container รันได้
+- [x] เข้าถึง API ผ่าน Published Port ได้
+- [x] อธิบายความต่างของ `EXPOSE` กับ `-p` ได้
+- [x] อธิบาย Layer Cache ได้
+- [x] Container ไม่รันเป็น Root หากเหมาะสม
 
 **Git checkpoint:** `build(api): containerize backend service`  
-**หลักฐาน/ผลทดสอบ:**  
-**วันที่ผ่าน:**  
+**หลักฐาน/ผลทดสอบ:** `docker build -t mini-telemetry-api:dev api` ผ่าน, `docker run -p 8001:8000` ผ่าน, `/health/live` และ `/health/ready` ผ่าน, container user คือ `app`  
+**วันที่ผ่าน:** 2026-07-15  
 
 ---
 

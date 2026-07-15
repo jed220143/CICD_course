@@ -244,3 +244,17 @@
 
 - `python -m pytest`: ผ่าน 2 tests
 - รัน Uvicorn บน `127.0.0.1:8000` แล้วเรียก `/health/live` และ `/health/ready` ผ่าน
+
+## Session: 2026-07-15 — Phase 3 Dockerize API
+
+- เพิ่ม `api/Dockerfile` และ `api/.dockerignore`
+- build image: `mini-telemetry-api:dev`
+- run container ด้วย published port `8001:8000`
+- health check ผ่านจาก host ผ่าน `http://127.0.0.1:8001`
+- container runtime user เป็น `app` ไม่ใช่ root
+
+### หมายเหตุสั้น
+
+- `EXPOSE 8000` คือ metadata ใน image
+- `-p 8001:8000` คือการ publish port จริงจาก host เข้า container
+- ใน container ต้อง bind `0.0.0.0` เพื่อให้ traffic จากนอก container เข้ามาได้
