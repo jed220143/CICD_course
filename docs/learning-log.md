@@ -215,3 +215,12 @@
 
 - ตรวจ pattern ของ AWS Access Key, AWS Secret Access Key, Private Key header, password, token และ secret แล้ว
 - ผลลัพธ์: ไม่พบ secret pattern ใน repository
+
+## Session: 2026-07-15 — Phase 1 / Lesson 1.4
+
+### Semantic Versioning และ Tag
+
+- ใช้ tag `v0.1.0` เป็น milestone แรกหลังจบ Repository Workflow
+- Branch คือเส้นทางทำงานที่ขยับต่อได้ เช่น `main` หรือ `feature/...`
+- Commit คือ snapshot หนึ่งจุดในประวัติ
+- Tag คือป้ายชื่อถาวรที่ชี้ไปยัง commit สำคัญ เช่น release หรือ milestone
