@@ -80,7 +80,7 @@
 - [x] Lesson 1.2 ฝึก Branch Workflow และแก้ Merge Conflict
 - [x] Lesson 1.3 สร้าง Pull Request พร้อมคำอธิบายและการตรวจตนเอง
 - [ ] Lesson 1.4 ใช้ Semantic Versioning และ Tag
-- [ ] ตรวจว่าไม่มี Secret, Token, Password หรือ Private Key ใน Repository
+- [x] ตรวจว่าไม่มี Secret, Token, Password หรือ Private Key ใน Repository
 
 ### เกณฑ์ผ่าน
 
@@ -89,10 +89,10 @@
 - [x] มี Pull Request อย่างน้อยหนึ่งรายการ
 - [x] แก้ Conflict ได้และอธิบายวิธีแก้ได้
 - [x] อธิบาย Commit History ได้
-- [ ] ไม่มี Secret ใน Repository
+- [x] ไม่มี Secret ใน Repository
 
 **Git checkpoint:** `chore: establish repository workflow and contribution rules`  
-**หลักฐาน/ลิงก์:** `https://github.com/jed220143/CICD_course.git`, PR #1 merge commit `214d038`, conflict resolution commit `6253553`, branch `feature/conflict-safety-rule`  
+**หลักฐาน/ลิงก์:** `https://github.com/jed220143/CICD_course.git`, PR #1 merge commit `214d038`, PR #2 merge commit `5976e0d`, conflict resolution commit `6253553`, secret scan ผ่าน  
 **วันที่ผ่าน:** 2026-07-15  
 
 ---
