@@ -26,6 +26,7 @@ class TelemetryReading(Base):
     __tablename__ = "telemetry_readings"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    message_id: Mapped[str] = mapped_column(String(120), nullable=False)
     device_id: Mapped[int] = mapped_column(ForeignKey("devices.id"), nullable=False)
     temperature_c: Mapped[Optional[float]] = mapped_column(Float)
     humidity_percent: Mapped[Optional[float]] = mapped_column(Float)
@@ -35,5 +36,6 @@ class TelemetryReading(Base):
     device: Mapped[Device] = relationship(back_populates="readings")
 
     __table_args__ = (
+        UniqueConstraint("message_id", name="uq_telemetry_readings_message_id"),
         Index("ix_telemetry_readings_device_recorded_at", "device_id", "recorded_at"),
     )

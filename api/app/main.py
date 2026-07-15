@@ -1,14 +1,25 @@
+from contextlib import asynccontextmanager
+from collections.abc import AsyncIterator
+
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
 from app.config import get_settings
 from app.db import check_database
 from app.logging import configure_logging
+from app.mqtt_subscriber import start_subscriber
 
 settings = get_settings()
 configure_logging(settings)
 
-app = FastAPI(title="Mini Telemetry API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    start_subscriber()
+    yield
+
+
+app = FastAPI(title="Mini Telemetry API", lifespan=lifespan)
 
 
 @app.get("/health/live")
