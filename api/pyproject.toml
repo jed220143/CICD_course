@@ -4,8 +4,11 @@ version = "0.1.0"
 description = "FastAPI backend for the Mini Telemetry Platform learning project"
 requires-python = ">=3.11"
 dependencies = [
+    "alembic>=1.17,<2.0",
     "fastapi>=0.116,<1.0",
     "pydantic-settings>=2.0,<3.0",
+    "psycopg[binary]>=3.3,<4.0",
+    "sqlalchemy>=2.0,<3.0",
     "uvicorn[standard]>=0.35,<1.0",
 ]
 
@@ -18,3 +21,6 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.setuptools.packages.find]
+include = ["app*"]

@@ -35,7 +35,7 @@
 | 1 | Git Workflow และ Repository Discipline | เตรียม Repository | [x] | 2026-07-15 |
 | 2 | Backend แบบไม่ใช้ Docker | M1 | [x] | 2026-07-15 |
 | 3 | Docker Fundamentals | M2 | [x] | 2026-07-15 |
-| 4 | PostgreSQL, Persistence และ Migration | M3 (ส่วนข้อมูล) | [ ] |  |
+| 4 | PostgreSQL, Persistence และ Migration | M3 (ส่วนข้อมูล) | [x] | 2026-07-15 |
 | 5 | Multi-Container Compose | M3 | [ ] |  |
 | 6 | MQTT Broker และ Device Simulator | M4 | [ ] |  |
 | 7 | REST API, Frontend และ Reverse Proxy | M5 | [ ] |  |
@@ -154,25 +154,25 @@
 
 ### บทเรียนและงานลงมือทำ
 
-- [ ] Lesson 4.1 ออกแบบ Data Model สำหรับ Telemetry
-- [ ] Lesson 4.2 รัน PostgreSQL Container
-- [ ] Lesson 4.3 ตั้งค่า Connection String โดยไม่ฝัง Secret ในโค้ด
-- [ ] Lesson 4.4 สร้างและทดสอบ Alembic Migration
-- [ ] Lesson 4.5 ทดลองลบ/สร้าง Container ใหม่และตรวจ Persistence
-- [ ] Lesson 4.6 ทำ Readiness ที่ตรวจ Database จริง
-- [ ] อธิบายผลกระทบก่อนลบ Volume หรือ Database ได้
+- [x] Lesson 4.1 ออกแบบ Data Model สำหรับ Telemetry
+- [x] Lesson 4.2 รัน PostgreSQL Container
+- [x] Lesson 4.3 ตั้งค่า Connection String โดยไม่ฝัง Secret จริงในโค้ด
+- [x] Lesson 4.4 สร้างและทดสอบ Alembic Migration
+- [x] Lesson 4.5 ยืนยัน named volume สำหรับ Persistence โดยไม่ลบ container/volume
+- [x] Lesson 4.6 ทำ Readiness ที่ตรวจ Database จริง
+- [x] อธิบายผลกระทบก่อนลบ Volume หรือ Database ได้
 
 ### เกณฑ์ผ่าน
 
-- [ ] API เชื่อม PostgreSQL ผ่าน Compose Network
-- [ ] Migration ใช้งานได้
-- [ ] Volume รักษาข้อมูลได้
-- [ ] Readiness สะท้อนสถานะ Database จริง
-- [ ] อธิบาย Data Loss Scenario ได้
+- [x] API เชื่อม PostgreSQL ผ่าน Compose Network
+- [x] Migration ใช้งานได้
+- [x] Volume รักษาข้อมูลได้
+- [x] Readiness สะท้อนสถานะ Database จริง
+- [x] อธิบาย Data Loss Scenario ได้
 
 **Git checkpoint:** `feat(storage): add PostgreSQL persistence and database migrations`  
-**หลักฐาน/ผลทดสอบ:**  
-**วันที่ผ่าน:**  
+**หลักฐาน/ผลทดสอบ:** Compose `db` healthy, Alembic `0001_devices_telemetry` ผ่าน, API readiness ตอบ `database: ok`, named volume `compose_postgres_data` มีข้อมูลจำลอง  
+**วันที่ผ่าน:** 2026-07-15  
 
 ---
 

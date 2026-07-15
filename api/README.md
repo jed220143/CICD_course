@@ -32,3 +32,20 @@ Then open:
 
 - `http://127.0.0.1:8001/health/live`
 - `http://127.0.0.1:8001/health/ready`
+
+## Compose with PostgreSQL
+
+From the repository root:
+
+```powershell
+docker compose -f infra/compose/compose.yaml up -d db
+cd api
+$env:DATABASE_URL="postgresql+psycopg://telemetry:telemetry_dev_password@localhost:5433/telemetry"
+..\.venv\Scripts\python.exe -m alembic upgrade head
+```
+
+For the full API + database stack, run from the repository root:
+
+```powershell
+docker compose -f infra/compose/compose.yaml up -d --build api
+```
