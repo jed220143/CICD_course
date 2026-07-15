@@ -19,7 +19,7 @@ Examples:
 
 ## Commit Guidelines
 
-Use small commits with clear messages.
+Use small commits with clear messages and verify that each commit contains no secrets.
 
 Good examples:
 
