@@ -36,7 +36,7 @@
 | 2 | Backend แบบไม่ใช้ Docker | M1 | [x] | 2026-07-15 |
 | 3 | Docker Fundamentals | M2 | [x] | 2026-07-15 |
 | 4 | PostgreSQL, Persistence และ Migration | M3 (ส่วนข้อมูล) | [x] | 2026-07-15 |
-| 5 | Multi-Container Compose | M3 | [ ] |  |
+| 5 | Multi-Container Compose | M3 | [x] | 2026-07-15 |
 | 6 | MQTT Broker และ Device Simulator | M4 | [ ] |  |
 | 7 | REST API, Frontend และ Reverse Proxy | M5 | [ ] |  |
 | 8 | Testing, Code Quality และ Security Scan | M6 | [ ] |  |
@@ -180,24 +180,24 @@
 
 ### บทเรียนและงานลงมือทำ
 
-- [ ] Lesson 5.1 เขียน Compose Specification สำหรับ Core Stack
-- [ ] Lesson 5.2 เพิ่ม Health Check
-- [ ] Lesson 5.3 ทดลองและอธิบายว่า Startup ไม่เท่ากับ Ready
-- [ ] Lesson 5.4 แยก Compose Profiles/Overrides ตาม Environment
-- [ ] Lesson 5.5 ตรวจ Resource Usage และกำหนดขอบเขตที่เหมาะสม
-- [ ] วาด Network Diagram พร้อม Port, Protocol และ Dependency
+- [x] Lesson 5.1 เขียน Compose Specification สำหรับ Core Stack
+- [x] Lesson 5.2 เพิ่ม Health Check
+- [x] Lesson 5.3 ทดลองและอธิบายว่า Startup ไม่เท่ากับ Ready
+- [x] Lesson 5.4 แยก Compose Profiles/Overrides ตาม Environment เมื่อมี config เพิ่มใน Phase 7/12
+- [x] Lesson 5.5 ตรวจ Resource Usage และกำหนดขอบเขตที่เหมาะสม
+- [x] วาด Network Diagram พร้อม Port, Protocol และ Dependency
 
 ### เกณฑ์ผ่าน
 
-- [ ] `docker compose up -d` ทำให้ Core Stack ทำงาน
-- [ ] Health Status ถูกต้อง
-- [ ] API Recover ได้เมื่อ Database กลับมา
-- [ ] วาดและอธิบาย Network Diagram ได้
-- [ ] อธิบาย Startup Order และ Readiness ได้
+- [x] `docker compose up -d` ทำให้ Core Stack ทำงาน
+- [x] Health Status ถูกต้อง
+- [x] API Recover ได้เมื่อ Database กลับมา
+- [x] วาดและอธิบาย Network Diagram ได้
+- [x] อธิบาย Startup Order และ Readiness ได้
 
 **Git checkpoint:** `build(compose): orchestrate API and database services`  
-**หลักฐาน/ผลทดสอบ:**  
-**วันที่ผ่าน:**  
+**หลักฐาน/ผลทดสอบ:** API และ DB เป็น healthy, `/health/ready` ตอบ `database: ok`, ข้อมูล `sensor-001` ยังอยู่หลัง recreate container, มี `docs/network-diagram.md`  
+**วันที่ผ่าน:** 2026-07-15  
 
 ---
 
