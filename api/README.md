@@ -20,3 +20,15 @@ Health endpoints:
 cd api
 python -m pytest
 ```
+
+## Docker
+
+```powershell
+docker build -t mini-telemetry-api:dev api
+docker run --rm --name mini-telemetry-api-dev -p 8001:8000 mini-telemetry-api:dev
+```
+
+Then open:
+
+- `http://127.0.0.1:8001/health/live`
+- `http://127.0.0.1:8001/health/ready`
