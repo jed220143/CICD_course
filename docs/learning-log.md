@@ -274,3 +274,17 @@
 - ข้อมูลอยู่ใน named volume `compose_postgres_data`
 - `docker compose down` หยุด stack แต่ไม่ลบ volume
 - `docker compose down -v` ลบ volume ด้วย ข้อมูล DB จะหาย จึงห้ามใช้ถ้ายังต้องการข้อมูล lab
+
+## Session: 2026-07-15 — Phase 5 Compose Core Stack
+
+- เพิ่ม explicit network `telemetry_net`
+- เพิ่ม `restart: unless-stopped` ให้ `api` และ `db`
+- เพิ่ม API Docker healthcheck ที่เรียก `/health/ready`
+- เพิ่ม `docs/network-diagram.md`
+- apply stack ด้วย `docker compose up -d --build` โดยไม่ลบ volume
+
+### ผลทดสอบ
+
+- `api` และ `db` มีสถานะ healthy
+- `/health/ready` ตอบ `database: ok`
+- ข้อมูล `sensor-001` ยังอยู่หลัง container recreate เพราะใช้ named volume เดิม
