@@ -258,3 +258,19 @@
 - `EXPOSE 8000` คือ metadata ใน image
 - `-p 8001:8000` คือการ publish port จริงจาก host เข้า container
 - ใน container ต้อง bind `0.0.0.0` เพื่อให้ traffic จากนอก container เข้ามาได้
+
+## Session: 2026-07-15 — Phase 4 PostgreSQL Persistence
+
+- เพิ่ม SQLAlchemy models: `devices` และ `telemetry_readings`
+- เพิ่ม Alembic migration `0001_devices_telemetry`
+- เพิ่ม PostgreSQL service ใน `infra/compose/compose.yaml`
+- รัน `docker compose -f infra/compose/compose.yaml up -d db` แล้ว DB healthy
+- รัน migration ผ่าน host port `5433`
+- เพิ่มข้อมูลจำลอง `sensor-001`
+- start API ผ่าน compose แล้ว readiness ตอบ `database: ok`
+
+### Data Loss Note
+
+- ข้อมูลอยู่ใน named volume `compose_postgres_data`
+- `docker compose down` หยุด stack แต่ไม่ลบ volume
+- `docker compose down -v` ลบ volume ด้วย ข้อมูล DB จะหาย จึงห้ามใช้ถ้ายังต้องการข้อมูล lab

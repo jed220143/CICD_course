@@ -1,6 +1,8 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 
 from app.config import get_settings
+from app.db import check_database
 from app.logging import configure_logging
 
 settings = get_settings()
@@ -18,9 +20,23 @@ def live() -> dict[str, str]:
     }
 
 
-@app.get("/health/ready")
-def ready() -> dict[str, str]:
+@app.get("/health/ready", response_model=None)
+def ready() -> dict[str, str] | JSONResponse:
+    if settings.database_url:
+        try:
+            check_database()
+        except Exception:
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "status": "not_ready",
+                    "service": settings.service_name,
+                    "database": "unavailable",
+                },
+            )
+
     return {
         "status": "ready",
         "service": settings.service_name,
+        "database": "ok" if settings.database_url else "not_configured",
     }

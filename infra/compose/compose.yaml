@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: mini-telemetry-db
+    environment:
+      POSTGRES_DB: telemetry
+      POSTGRES_USER: telemetry
+      POSTGRES_PASSWORD: telemetry_dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U telemetry -d telemetry"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ../../api
+    image: mini-telemetry-api:dev
+    container_name: mini-telemetry-api
+    environment:
+      APP_ENV: development
+      APP_PORT: 8000
+      DATABASE_URL: postgresql+psycopg://telemetry:telemetry_dev_password@db:5432/telemetry
+      LOG_LEVEL: INFO
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

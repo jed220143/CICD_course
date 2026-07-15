@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_env: str = "development"
     app_port: int = 8000
+    database_url: str = ""
     log_level: str = "INFO"
     service_name: str = "mini-telemetry-api"
 
