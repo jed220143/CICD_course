@@ -147,3 +147,18 @@
 - Remote Repository: `https://github.com/jed220143/CICD_course.git`
 - Push Status: `main` push สำเร็จและ track `origin/main` แล้ว
 - Pull Request: ยังไม่มี จะทำใน Lesson 1.3 หลังฝึก Branch Workflow
+
+## Session: 2026-07-15 — Phase 1 / Lesson 1.2
+
+### สิ่งที่ทำแล้ว
+
+- ยืนยันว่า GitHub account กลับมาใช้งานได้และ push ไป `origin/main` สำเร็จ
+- สร้าง branch `feature/repository-workflow` เพื่อฝึก Short-lived Feature Branch
+- เพิ่ม `CONTRIBUTING.md` สำหรับกติกา Branch, Commit, Pull Request และ Safety Rules
+- เพิ่ม `.github/PULL_REQUEST_TEMPLATE.md` สำหรับฝึกเปิด Pull Request แบบมี Scope, Test Evidence, Risk และ Rollback
+
+### หลักฐาน
+
+- Remote Repository: `https://github.com/jed220143/CICD_course.git`
+- Base branch: `main`
+- Feature branch: `feature/repository-workflow`
