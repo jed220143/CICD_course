@@ -1,4 +1,5 @@
 from collections.abc import Generator
+from contextlib import contextmanager
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
@@ -18,6 +19,12 @@ def get_engine():
 
 
 def get_session() -> Generator[Session, None, None]:
+    with create_session() as session:
+        yield session
+
+
+@contextmanager
+def create_session() -> Generator[Session, None, None]:
     engine = get_engine()
     if engine is None:
         raise RuntimeError("DATABASE_URL is not configured")

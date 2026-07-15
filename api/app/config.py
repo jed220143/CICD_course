@@ -9,6 +9,9 @@ class Settings(BaseSettings):
     database_url: str = ""
     log_level: str = "INFO"
     service_name: str = "mini-telemetry-api"
+    mqtt_broker_host: str = ""
+    mqtt_broker_port: int = 1883
+    mqtt_topic: str = "devices/+/telemetry"
 
     model_config = SettingsConfigDict(
         env_file=".env",
