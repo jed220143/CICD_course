@@ -85,14 +85,14 @@
 ### เกณฑ์ผ่าน
 
 - [x] มี Repository ที่อ่านเข้าใจ
-- [ ] มี Feature Branch อย่างน้อยหนึ่ง Branch
+- [x] มี Feature Branch อย่างน้อยหนึ่ง Branch
 - [ ] มี Pull Request อย่างน้อยหนึ่งรายการ
 - [ ] แก้ Conflict ได้และอธิบายวิธีแก้ได้
 - [ ] อธิบาย Commit History ได้
 - [ ] ไม่มี Secret ใน Repository
 
 **Git checkpoint:** `chore: establish repository workflow and contribution rules`  
-**หลักฐาน/ลิงก์:** `https://github.com/jed220143/CICD_course.git`, commit `42b43f6`  
+**หลักฐาน/ลิงก์:** `https://github.com/jed220143/CICD_course.git`, branch `feature/repository-workflow`, commit `547ea12`  
 **วันที่ผ่าน:** 2026-07-15  
 
 ---
