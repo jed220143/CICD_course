@@ -19,7 +19,7 @@ Examples:
 
 ## Commit Guidelines
 
-Use small commits with clear messages.
+Use small, focused commits with clear messages that explain the learning intent.
 
 Good examples:
 
