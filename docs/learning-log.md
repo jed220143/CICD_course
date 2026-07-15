@@ -185,3 +185,26 @@
 - `171ea90`: บันทึกหลักฐานว่าเชื่อม GitHub remote และ push `main` สำเร็จ
 - `547ea12`, `a8cc249`, `777231e`: งานบน feature branch สำหรับ workflow และ PR evidence
 - `214d038`: merge commit ที่รวม PR #1 เข้า `main`
+
+## Session: 2026-07-15 — Phase 1 / Lesson 1.2 Conflict Lab
+
+### สิ่งที่ทำแล้ว
+
+- สร้าง branch `feature/conflict-main-rule` และแก้บรรทัด Commit Guidelines ใน `CONTRIBUTING.md`
+- สร้าง branch `feature/conflict-safety-rule` และแก้บรรทัดเดียวกันอีกแบบ
+- merge `feature/conflict-main-rule` เข้า `feature/conflict-safety-rule` เพื่อให้เกิด conflict จริง
+- แก้ conflict โดยรวมความหมายทั้งสองฝั่งเข้าด้วยกัน
+
+### วิธีแก้ Conflict ที่ใช้
+
+1. อ่าน marker `<<<<<<<`, `=======`, `>>>>>>>` เพื่อแยกฝั่งปัจจุบันกับฝั่งที่ merge เข้ามา
+2. เลือกผลลัพธ์สุดท้ายที่เก็บ intent สำคัญของทั้งสองฝั่ง
+3. ลบ conflict marker ทั้งหมด
+4. ใช้ `git add CONTRIBUTING.md` เพื่อ mark resolved
+5. commit ผลการแก้ด้วย `docs: resolve commit guidance conflict`
+
+### หลักฐาน
+
+- Conflict branch: `feature/conflict-safety-rule`
+- Other branch: `feature/conflict-main-rule`
+- Conflict resolution commit: `6253553`
