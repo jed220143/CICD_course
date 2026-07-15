@@ -8,8 +8,11 @@
 
 - ใช้ `[ ]` = ยังไม่เริ่ม, `[-]` = กำลังทำ/ยังไม่ผ่านครบ, `[x]` = ผ่านแล้ว
 - กรอกวันที่ในรูปแบบ `YYYY-MM-DD`
-- ทุก Phase ต้องมีหลักฐาน เช่น commit, PR, log, screenshot, test result, diagram หรือเอกสาร
-- บันทึกสิ่งที่เข้าใจ สิ่งที่ยังสงสัย และปัญหาที่พบใน `docs/learning-log.md`
+- ใช้ Fast-track mode: อัปเดต checklist ตอนปิดบทหรือปิด phase ไม่ต้องติ๊กทุก micro-step
+- หลักฐานต่อ phase ใช้เท่าที่จำเป็น เช่น commit/PR หลัก, test result, screenshot หรือ decision สำคัญ
+- Commit/push เป็นก้อนระดับบทหรือความสามารถ โดยทั่วไปบทละ 1 ครั้งพอ
+- Secret scan ทำก่อน push/PR/release หรือเมื่อแตะ config/cloud/secret ไม่ต้องทำซ้ำทุกขั้นย่อย
+- บันทึกเฉพาะสิ่งที่เข้าใจเพิ่ม สิ่งที่ยังสงสัย decision สำคัญ และปัญหาที่พบใน `docs/learning-log.md`
 - ก่อนเริ่ม Phase ถัดไป ต้องผ่าน Acceptance Criteria ของ Phase ปัจจุบันครบ
 - หากเปลี่ยน Architecture ให้สร้าง ADR และอัปเดต Diagram
 
@@ -29,8 +32,8 @@
 | Phase | หัวข้อ | Milestone | สถานะ | วันที่ผ่าน |
 |---:|---|---|---|---|
 | 0 | Baseline, Learning Contract และ Cost Safety | เตรียมความพร้อม | [x] | 2026-07-13 |
-| 1 | Git Workflow และ Repository Discipline | เตรียม Repository | [-] |  |
-| 2 | Backend แบบไม่ใช้ Docker | M1 | [ ] |  |
+| 1 | Git Workflow และ Repository Discipline | เตรียม Repository | [x] | 2026-07-15 |
+| 2 | Backend แบบไม่ใช้ Docker | M1 | [x] | 2026-07-15 |
 | 3 | Docker Fundamentals | M2 | [ ] |  |
 | 4 | PostgreSQL, Persistence และ Migration | M3 (ส่วนข้อมูล) | [ ] |  |
 | 5 | Multi-Container Compose | M3 | [ ] |  |
@@ -101,23 +104,23 @@
 
 ### บทเรียนและงานลงมือทำ
 
-- [ ] Lesson 2.1 สร้าง FastAPI Bootstrap และ Health Endpoint
-- [ ] Lesson 2.2 อ่าน Configuration จาก Environment
-- [ ] Lesson 2.3 เพิ่ม Structured Logging
-- [ ] Lesson 2.4 เขียนและรัน Unit Test แรก
-- [ ] อธิบายเส้นทาง Request ตั้งแต่ Client ถึง Process ได้
+- [x] Lesson 2.1 สร้าง FastAPI Bootstrap และ Health Endpoint
+- [x] Lesson 2.2 อ่าน Configuration จาก Environment
+- [x] Lesson 2.3 เพิ่ม Structured Logging
+- [x] Lesson 2.4 เขียนและรัน Unit Test แรก
+- [x] อธิบายเส้นทาง Request ตั้งแต่ Client ถึง Process ได้
 
 ### เกณฑ์ผ่าน
 
-- [ ] API รันบนเครื่องได้
-- [ ] Health Endpoint ผ่าน
-- [ ] Test ผ่าน
-- [ ] Configuration อ่านจาก Environment
-- [ ] อธิบายว่า Process ฟัง Port ได้อย่างไร
+- [x] API รันบนเครื่องได้
+- [x] Health Endpoint ผ่าน
+- [x] Test ผ่าน
+- [x] Configuration อ่านจาก Environment
+- [x] อธิบายว่า Process ฟัง Port ได้อย่างไร
 
 **Git checkpoint:** `feat(api): add application bootstrap and health endpoints`  
-**หลักฐาน/ผลทดสอบ:**  
-**วันที่ผ่าน:**  
+**หลักฐาน/ผลทดสอบ:** `python -m pytest` ผ่าน 2 tests, localhost health check ผ่านบน `127.0.0.1:8000`  
+**วันที่ผ่าน:** 2026-07-15  
 
 ---
 

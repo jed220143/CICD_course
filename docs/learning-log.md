@@ -224,3 +224,23 @@
 - Branch คือเส้นทางทำงานที่ขยับต่อได้ เช่น `main` หรือ `feature/...`
 - Commit คือ snapshot หนึ่งจุดในประวัติ
 - Tag คือป้ายชื่อถาวรที่ชี้ไปยัง commit สำคัญ เช่น release หรือ milestone
+
+## Session: 2026-07-15 — Learning Pace Adjustment
+
+- ปรับเป็น Fast-track mode: สอนสั้นขึ้น ทำเป็นก้อนต่อบท และลดการอัปเดตเอกสารย่อยระหว่างทาง
+- Commit/push โดยทั่วไปทำเมื่อจบบทหรือมี milestone สำคัญ ไม่ทำทุกขั้นเล็ก
+- Secret scan ทำก่อน push/PR/release หรือเมื่อแตะ config/cloud/secret เท่านั้น
+- ถ้าผู้เรียนสงสัยค่อยขยายรายละเอียดเฉพาะจุด
+
+## Session: 2026-07-15 — Phase 2 Backend Bootstrap
+
+- สร้าง FastAPI backend ใน `api/`
+- เพิ่ม health endpoints: `GET /health/live` และ `GET /health/ready`
+- อ่าน config จาก environment ผ่าน `pydantic-settings`: `APP_ENV`, `APP_PORT`, `LOG_LEVEL`
+- เพิ่ม structured logging พื้นฐาน
+- เพิ่ม health endpoint smoke tests
+
+### ผลทดสอบ
+
+- `python -m pytest`: ผ่าน 2 tests
+- รัน Uvicorn บน `127.0.0.1:8000` แล้วเรียก `/health/live` และ `/health/ready` ผ่าน
