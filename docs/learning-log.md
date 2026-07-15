@@ -143,4 +143,7 @@
 ## หลักฐาน
 
 - Environment Audit: บันทึกใน Session นี้
-- Commit/PR: ยังไม่มี เนื่องจาก Workspace ยังไม่ได้เริ่มเป็น Git Repository
+- Initial Commit: `42b43f6` — `chore: initialize learning documentation and cost safety policy`
+- Remote Repository: `https://github.com/jed220143/CICD_course.git`
+- Push Status: `main` push สำเร็จและ track `origin/main` แล้ว
+- Pull Request: ยังไม่มี จะทำใน Lesson 1.3 หลังฝึก Branch Workflow
