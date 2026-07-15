@@ -176,3 +176,12 @@
 - Pull Request branch: `feature/repository-workflow`
 - Base branch: `main`
 - Pull Request URL: `https://github.com/jed220143/CICD_course/pulls`
+- Merge commit: `214d038` — `Merge pull request #1 from jed220143/feature/repository-workflow`
+- Local `main` fast-forward แล้วหลัง merge
+
+### Commit History ที่อธิบายได้
+
+- `42b43f6`: commit เริ่มต้นของเอกสารและ safety policy
+- `171ea90`: บันทึกหลักฐานว่าเชื่อม GitHub remote และ push `main` สำเร็จ
+- `547ea12`, `a8cc249`, `777231e`: งานบน feature branch สำหรับ workflow และ PR evidence
+- `214d038`: merge commit ที่รวม PR #1 เข้า `main`

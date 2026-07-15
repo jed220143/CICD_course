@@ -88,11 +88,11 @@
 - [x] มี Feature Branch อย่างน้อยหนึ่ง Branch
 - [x] มี Pull Request อย่างน้อยหนึ่งรายการ
 - [ ] แก้ Conflict ได้และอธิบายวิธีแก้ได้
-- [ ] อธิบาย Commit History ได้
+- [x] อธิบาย Commit History ได้
 - [ ] ไม่มี Secret ใน Repository
 
 **Git checkpoint:** `chore: establish repository workflow and contribution rules`  
-**หลักฐาน/ลิงก์:** `https://github.com/jed220143/CICD_course.git`, branch `feature/repository-workflow`, PR จาก branch `feature/repository-workflow`, commit `a8cc249`  
+**หลักฐาน/ลิงก์:** `https://github.com/jed220143/CICD_course.git`, PR #1 merge commit `214d038`, branch `feature/repository-workflow`, commit `777231e`  
 **วันที่ผ่าน:** 2026-07-15  
 
 ---
