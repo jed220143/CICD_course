@@ -80,6 +80,18 @@ Public repo ใช้ standard GitHub-hosted runners ฟรี ส่วน priv
 
 เพราะ registry จะรกและเสี่ยงใช้ image ที่ยังไม่ผ่าน review ใน production เราจึง build ตรวจทุก PR แต่ push image เฉพาะ main, version tag หรือ manual run
 
+### CD ต่างจาก CI ยังไง?
+
+CI ตรวจว่า test/build ผ่าน ส่วน CD เอาสิ่งที่ผ่านแล้วไปรันจริง โดยต้องมีขั้น migrate, start/restart service และ health check
+
+### ทำไมต้องเอา Alembic migration เข้า API image?
+
+เพราะตอน deploy จริงควรรัน migration จาก image เดียวกับ code ที่กำลัง deploy ไม่ควรพึ่งไฟล์หรือ venv บนเครื่อง deploy แบบ manual
+
+### ทำไม deploy script ต้องเช็ก exit code ของ `docker compose`?
+
+เพราะ PowerShell ไม่ได้ throw error ให้ทุก native command อัตโนมัติ ถ้าไม่เช็ก `$LASTEXITCODE` script อาจรันต่อและ health check ของ container เก่าหลอกว่า deploy สำเร็จ
+
 ## NGINX / Config / Production-minded
 
 ### NGINX config ขึ้น Git ปลอดภัยไหม?

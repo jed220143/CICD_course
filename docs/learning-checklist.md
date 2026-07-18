@@ -15,6 +15,7 @@
 - [x] Phase 8: NGINX reverse proxy ผ่าน `localhost:8080`
 - [x] Phase 9: GitHub Actions CI สำหรับ API tests และ Docker image build
 - [x] Phase 10: GitHub Container Registry publish job สำหรับ image ที่ผ่าน CI
+- [x] Phase 11: Local CD script สำหรับ build, migrate, start stack และ health check
 
 ## Current Stack
 
