@@ -1,14 +1,23 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
       - main
       - "feature/**"
+    tags:
+      - "v*"
 
 permissions:
   contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  API_IMAGE: ghcr.io/jed220143/mini-telemetry-api
+  SIMULATOR_IMAGE: ghcr.io/jed220143/mini-telemetry-simulator
 
 jobs:
   api-tests:
@@ -44,3 +53,48 @@ jobs:
 
       - name: Build simulator image
         run: docker build -t mini-telemetry-simulator:ci simulator
+
+  publish-images:
+    name: Publish images to GHCR
+    runs-on: ubuntu-latest
+    needs:
+      - api-tests
+      - docker-build
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build images with immutable SHA tags
+        run: |
+          docker build -t "${API_IMAGE}:sha-${GITHUB_SHA}" api
+          docker build -t "${SIMULATOR_IMAGE}:sha-${GITHUB_SHA}" simulator
+
+      - name: Push immutable SHA tags
+        run: |
+          docker push "${API_IMAGE}:sha-${GITHUB_SHA}"
+          docker push "${SIMULATOR_IMAGE}:sha-${GITHUB_SHA}"
+
+      - name: Push latest tags from main
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker tag "${API_IMAGE}:sha-${GITHUB_SHA}" "${API_IMAGE}:latest"
+          docker tag "${SIMULATOR_IMAGE}:sha-${GITHUB_SHA}" "${SIMULATOR_IMAGE}:latest"
+          docker push "${API_IMAGE}:latest"
+          docker push "${SIMULATOR_IMAGE}:latest"
+
+      - name: Push version tags from Git tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          docker tag "${API_IMAGE}:sha-${GITHUB_SHA}" "${API_IMAGE}:${GITHUB_REF_NAME}"
+          docker tag "${SIMULATOR_IMAGE}:sha-${GITHUB_SHA}" "${SIMULATOR_IMAGE}:${GITHUB_REF_NAME}"
+          docker push "${API_IMAGE}:${GITHUB_REF_NAME}"
+          docker push "${SIMULATOR_IMAGE}:${GITHUB_REF_NAME}"
