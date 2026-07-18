@@ -100,6 +100,14 @@ CI ตรวจว่า test/build ผ่าน ส่วน CD เอาสิ
 
 Git tag ใช้ mark commit เป็น release เช่น `v0.2.0` และใช้ trigger workflow ให้ build/push image versioned tag ที่อ้างอิง release นั้นได้
 
+### Deploy จาก registry ต่างจาก deploy-local เดิมยังไง?
+
+deploy-local เดิม build image จาก source บนเครื่องเรา ส่วน deploy จาก registry จะ `docker pull` image ที่ CI/CD publish แล้วมารัน เหมือน production มากกว่า
+
+### `unauthorized` ตอน pull GHCR แปลว่าอะไร?
+
+แปลว่า Docker ยังไม่มีสิทธิ์อ่าน package นั้น อาจเพราะ image ยังไม่ได้ publish, package เป็น private, หรือยังไม่ได้ `docker login ghcr.io`
+
 ## NGINX / Config / Production-minded
 
 ### NGINX config ขึ้น Git ปลอดภัยไหม?
