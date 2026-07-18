@@ -92,6 +92,10 @@ CI ตรวจว่า test/build ผ่าน ส่วน CD เอาสิ
 
 เพราะ PowerShell ไม่ได้ throw error ให้ทุก native command อัตโนมัติ ถ้าไม่เช็ก `$LASTEXITCODE` script อาจรันต่อและ health check ของ container เก่าหลอกว่า deploy สำเร็จ
 
+### Rollback ใน deploy script คือ rollback ทุกอย่างไหม?
+
+ยังไม่ใช่ ตอนนี้ rollback เฉพาะ application image คือ API และ simulator ส่วน DB schema ไม่ downgrade อัตโนมัติ เพราะเสี่ยงข้อมูลหาย ต้องออกแบบ migration strategy แยกต่างหาก
+
 ## NGINX / Config / Production-minded
 
 ### NGINX config ขึ้น Git ปลอดภัยไหม?

@@ -16,6 +16,7 @@
 - [x] Phase 9: GitHub Actions CI สำหรับ API tests และ Docker image build
 - [x] Phase 10: GitHub Container Registry publish job สำหรับ image ที่ผ่าน CI
 - [x] Phase 11: Local CD script สำหรับ build, migrate, start stack และ health check
+- [x] Phase 12: Local application rollback เมื่อ deploy health check fail
 
 ## Current Stack
 
