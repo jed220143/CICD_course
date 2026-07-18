@@ -18,7 +18,7 @@
 - [x] Phase 11: Local CD script สำหรับ build, migrate, start stack และ health check
 - [x] Phase 12: Local application rollback เมื่อ deploy health check fail
 - [x] Phase 13: Merge เข้า `main` และสร้าง release tag `v0.2.0`
-- [ ] Phase 14: Deploy จาก GHCR image tag `v0.2.0`
+- [x] Phase 14: Deploy จาก GHCR image tag `v0.2.0`
 
 ## Current Stack
 

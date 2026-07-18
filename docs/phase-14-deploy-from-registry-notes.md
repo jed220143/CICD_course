@@ -41,7 +41,7 @@ GHCR image -> docker pull -> run
 
 นี่ใกล้ production มากกว่า เพราะ server ไม่ต้องมี build context หรือ build tools ครบ
 
-## Current blocker observed
+## Previous blocker observed
 
 ตอนลอง pull:
 
@@ -63,3 +63,12 @@ unauthorized
 - Docker ยังไม่ได้ login กับ `ghcr.io`
 
 ต้องตรวจใน GitHub Actions และ Packages ก่อน verify deploy จาก registry จริง
+
+## Verification after package visibility update
+
+หลังตั้ง package visibility ให้ pull ได้:
+
+- `docker pull ghcr.io/jed220143/mini-telemetry-api:v0.2.0`: ผ่าน
+- `docker pull ghcr.io/jed220143/mini-telemetry-simulator:v0.2.0`: ผ่าน
+- `scripts/deploy-registry-local.ps1 -ImageTag v0.2.0`: ผ่าน
+- health check ผ่าน `http://127.0.0.1:8080/api/health/ready`
