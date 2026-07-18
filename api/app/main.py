@@ -8,6 +8,7 @@ from app.config import get_settings
 from app.db import check_database
 from app.logging import configure_logging
 from app.mqtt_subscriber import start_subscriber
+from app.read_api import router as read_router
 
 settings = get_settings()
 configure_logging(settings)
@@ -20,6 +21,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(title="Mini Telemetry API", lifespan=lifespan)
+app.include_router(read_router)
 
 
 @app.get("/health/live")

@@ -32,6 +32,7 @@ Thumbs.db
 # Runtime output
 *.log
 tmp/
+local-artifacts/
 
 # Terraform local state and generated plans
 .terraform/

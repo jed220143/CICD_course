@@ -10,6 +10,10 @@
 - [x] Phase 4: PostgreSQL + SQLAlchemy + Alembic migration + Docker volume
 - [x] Phase 5: Compose core stack, network, healthcheck, `depends_on`
 - [x] Phase 6: MQTT broker + simulator + API subscriber + telemetry insert เข้า DB
+- [x] Phase 7: Read API สำหรับดู devices และ telemetry readings จาก DB
+- [x] Local learning: bind mount ให้ simulator เขียนไฟล์ออกมาที่ `local-artifacts/simulator`
+- [x] Phase 8: NGINX reverse proxy ผ่าน `localhost:8080`
+- [x] Phase 9: GitHub Actions CI สำหรับ API tests และ Docker image build
 
 ## Current Stack
 
@@ -17,6 +21,14 @@
 - `mini-telemetry-api`: FastAPI รับ HTTP และ subscribe MQTT
 - `mini-telemetry-broker`: Mosquitto MQTT broker สำหรับ lab local
 - `mini-telemetry-simulator`: ส่งข้อมูล sensor จำลองทุก 5 วินาที
+
+## Phase 7 Pass Criteria
+
+- [x] `GET /devices` แสดง device และจำนวน readings ได้
+- [x] `GET /telemetry/latest?limit=3` แสดงข้อมูล telemetry ล่าสุดได้
+- [x] `GET /devices/sensor-001/readings?limit=3` แสดงข้อมูลเฉพาะ device ได้
+- [x] `pytest` ผ่าน 4 tests
+- [x] API container healthy หลัง rebuild
 
 ## Phase 6 Pass Criteria
 
