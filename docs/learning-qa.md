@@ -96,6 +96,10 @@ CI ตรวจว่า test/build ผ่าน ส่วน CD เอาสิ
 
 ยังไม่ใช่ ตอนนี้ rollback เฉพาะ application image คือ API และ simulator ส่วน DB schema ไม่ downgrade อัตโนมัติ เพราะเสี่ยงข้อมูลหาย ต้องออกแบบ migration strategy แยกต่างหาก
 
+### Git tag ใช้ทำอะไรใน CI/CD?
+
+Git tag ใช้ mark commit เป็น release เช่น `v0.2.0` และใช้ trigger workflow ให้ build/push image versioned tag ที่อ้างอิง release นั้นได้
+
 ## NGINX / Config / Production-minded
 
 ### NGINX config ขึ้น Git ปลอดภัยไหม?

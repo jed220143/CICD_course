@@ -17,6 +17,7 @@
 - [x] Phase 10: GitHub Container Registry publish job สำหรับ image ที่ผ่าน CI
 - [x] Phase 11: Local CD script สำหรับ build, migrate, start stack และ health check
 - [x] Phase 12: Local application rollback เมื่อ deploy health check fail
+- [x] Phase 13: Merge เข้า `main` และสร้าง release tag `v0.2.0`
 
 ## Current Stack
 
