@@ -13,6 +13,7 @@
 - [x] Phase 7: Read API สำหรับดู devices และ telemetry readings จาก DB
 - [x] Local learning: bind mount ให้ simulator เขียนไฟล์ออกมาที่ `local-artifacts/simulator`
 - [x] Phase 8: NGINX reverse proxy ผ่าน `localhost:8080`
+- [x] Phase 9: GitHub Actions CI สำหรับ API tests และ Docker image build
 
 ## Current Stack
 
