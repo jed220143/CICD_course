@@ -19,6 +19,7 @@
 - [x] Phase 12: Local application rollback เมื่อ deploy health check fail
 - [x] Phase 13: Merge เข้า `main` และสร้าง release tag `v0.2.0`
 - [x] Phase 14: Deploy จาก GHCR image tag `v0.2.0`
+- [x] Phase 15: Compose hardening แยก local-only ports/bind mount ไป `compose.local.yaml`
 
 ## Current Stack
 

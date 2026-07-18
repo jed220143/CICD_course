@@ -1,0 +1,16 @@
+services:
+  broker:
+    ports:
+      - "1883:1883"
+
+  db:
+    ports:
+      - "5433:5432"
+
+  api:
+    ports:
+      - "8001:8000"
+
+  simulator:
+    volumes:
+      - ../../local-artifacts/simulator:/app/out

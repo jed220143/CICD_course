@@ -3,8 +3,6 @@ services:
     image: eclipse-mosquitto:2
     container_name: mini-telemetry-broker
     restart: unless-stopped
-    ports:
-      - "1883:1883"
     volumes:
       - ../mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     networks:
@@ -18,8 +16,6 @@ services:
       POSTGRES_DB: telemetry
       POSTGRES_USER: telemetry
       POSTGRES_PASSWORD: telemetry_dev_password
-    ports:
-      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -44,8 +40,6 @@ services:
       MQTT_BROKER_HOST: broker
       MQTT_BROKER_PORT: 1883
       MQTT_TOPIC: devices/+/telemetry
-    ports:
-      - "8001:8000"
     depends_on:
       broker:
         condition: service_started
@@ -73,8 +67,6 @@ services:
       DEVICE_KEY: sensor-001
       SIMULATOR_INTERVAL_SECONDS: 5
       SIMULATOR_OUTPUT_DIR: /app/out
-    volumes:
-      - ../../local-artifacts/simulator:/app/out
     depends_on:
       broker:
         condition: service_started
