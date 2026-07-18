@@ -11,6 +11,8 @@
 - [x] Phase 5: Compose core stack, network, healthcheck, `depends_on`
 - [x] Phase 6: MQTT broker + simulator + API subscriber + telemetry insert เข้า DB
 - [x] Phase 7: Read API สำหรับดู devices และ telemetry readings จาก DB
+- [x] Local learning: bind mount ให้ simulator เขียนไฟล์ออกมาที่ `local-artifacts/simulator`
+- [x] Phase 8: NGINX reverse proxy ผ่าน `localhost:8080`
 
 ## Current Stack
 
