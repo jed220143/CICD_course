@@ -1,7 +1,10 @@
 from collections.abc import Generator
 from contextlib import contextmanager
 
+from functools import lru_cache
+
 from sqlalchemy import create_engine, text
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from app.config import get_settings
@@ -11,7 +14,8 @@ class Base(DeclarativeBase):
     pass
 
 
-def get_engine():
+@lru_cache
+def get_engine() -> Engine | None:
     settings = get_settings()
     if not settings.database_url:
         return None

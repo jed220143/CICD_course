@@ -8,9 +8,17 @@ services:
       - "5433:5432"
 
   api:
+    build:
+      context: ../../api
+    image: mini-telemetry-api:dev
+    environment:
+      APP_ENV: development
     ports:
       - "8001:8000"
 
   simulator:
+    build:
+      context: ../../simulator
+    image: mini-telemetry-simulator:dev
     volumes:
       - ../../local-artifacts/simulator:/app/out

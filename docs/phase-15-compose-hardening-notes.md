@@ -6,13 +6,12 @@
 
 ```text
 infra/compose/compose.yaml
-infra/compose/compose.registry.yaml
 infra/compose/compose.local.yaml
 ```
 
 ## What changed
 
-ไฟล์หลัก `compose.yaml` และ `compose.registry.yaml` เหลือ exposed port หลักแค่ NGINX:
+ไฟล์หลัก `compose.yaml` เหลือ exposed port หลักแค่ NGINX:
 
 ```text
 8080:80
@@ -49,6 +48,12 @@ Local debugging with extra ports/artifacts:
 
 ```powershell
 docker compose -f infra\compose\compose.yaml -f infra\compose\compose.local.yaml up -d
+```
+
+ก่อนรันด้วยมือบน PowerShell ให้กำหนดรหัส DB สำหรับ Local:
+
+```powershell
+$env:POSTGRES_PASSWORD = "telemetry_dev_password"
 ```
 
 ## Key idea

@@ -1,23 +1,26 @@
 # Network Diagram
 
 ```text
-Host browser / tools
-  | HTTP localhost:8001
+Host browser
+  | HTTP localhost:8080
   v
-api service: mini-telemetry-api
+nginx service
+  | HTTP inside Docker network: api:8000
+  v
+api service
   | HTTP inside container: 0.0.0.0:8000
   | PostgreSQL connection: db:5432
   | MQTT subscribe: broker:1883 / devices/+/telemetry
   v
-db service: mini-telemetry-db
+db service
   | stores data at /var/lib/postgresql/data
   v
 Docker named volume: compose_postgres_data
 
-simulator service: mini-telemetry-simulator
+simulator service
   | MQTT publish: devices/sensor-001/telemetry
   v
-broker service: mini-telemetry-broker
+broker service
   | forwards messages to subscribers
   v
 api service
@@ -27,9 +30,10 @@ api service
 
 | Service | Container port | Host port | Purpose |
 |---|---:|---:|---|
-| api | 8000 | 8001 | FastAPI HTTP |
-| db | 5432 | 5433 | PostgreSQL local access |
-| broker | 1883 | 1883 | MQTT local lab |
+| nginx | 80 | 8080 | เส้นทางเข้าใช้งานหลัก |
+| api | 8000 | ไม่เปิดในไฟล์หลัก; Local override ใช้ 8001 | FastAPI HTTP |
+| db | 5432 | ไม่เปิดในไฟล์หลัก; Local override ใช้ 5433 | PostgreSQL |
+| broker | 1883 | ไม่เปิดในไฟล์หลัก; Local override ใช้ 1883 | MQTT |
 | simulator | - | - | Publishes fake telemetry inside Docker network |
 
 ## Startup Order

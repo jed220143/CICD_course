@@ -1,7 +1,6 @@
 services:
   broker:
     image: eclipse-mosquitto:2
-    container_name: mini-telemetry-broker
     restart: unless-stopped
     volumes:
       - ../mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
@@ -10,12 +9,11 @@ services:
 
   db:
     image: postgres:16-alpine
-    container_name: mini-telemetry-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: telemetry
       POSTGRES_USER: telemetry
-      POSTGRES_PASSWORD: telemetry_dev_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -27,15 +25,12 @@ services:
       - telemetry_net
 
   api:
-    build:
-      context: ../../api
-    image: mini-telemetry-api:dev
-    container_name: mini-telemetry-api
+    image: ghcr.io/jed220143/mini-telemetry-api:${IMAGE_TAG:-v0.2.0}
     restart: unless-stopped
     environment:
-      APP_ENV: development
+      APP_ENV: ${APP_ENV:-production}
       APP_PORT: 8000
-      DATABASE_URL: postgresql+psycopg://telemetry:telemetry_dev_password@db:5432/telemetry
+      DATABASE_URL: postgresql+psycopg://telemetry:${POSTGRES_PASSWORD}@db:5432/telemetry
       LOG_LEVEL: INFO
       MQTT_BROKER_HOST: broker
       MQTT_BROKER_PORT: 1883
@@ -55,10 +50,7 @@ services:
       - telemetry_net
 
   simulator:
-    build:
-      context: ../../simulator
-    image: mini-telemetry-simulator:dev
-    container_name: mini-telemetry-simulator
+    image: ghcr.io/jed220143/mini-telemetry-simulator:${IMAGE_TAG:-v0.2.0}
     restart: unless-stopped
     environment:
       MQTT_BROKER_HOST: broker
@@ -76,8 +68,7 @@ services:
       - telemetry_net
 
   nginx:
-    image: nginx:1.27-alpine
-    container_name: mini-telemetry-nginx
+    image: nginx:1.30.4-alpine
     restart: unless-stopped
     ports:
       - "8080:80"

@@ -2,7 +2,10 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $composeFile = Join-Path $repoRoot "infra\compose\compose.yaml"
+$localComposeFile = Join-Path $repoRoot "infra\compose\compose.local.yaml"
 $healthUrl = "http://127.0.0.1:8080/api/health/ready"
+$env:APP_ENV = "development"
+$env:POSTGRES_PASSWORD = "telemetry_dev_password"
 $apiImage = "mini-telemetry-api:dev"
 $simulatorImage = "mini-telemetry-simulator:dev"
 $apiRollbackImage = "mini-telemetry-api:rollback"
@@ -26,7 +29,7 @@ function Invoke-DockerCompose {
         [string[]]$ComposeArgs
     )
 
-    docker compose -f $composeFile @ComposeArgs
+    docker compose -f $composeFile -f $localComposeFile @ComposeArgs
     if ($LASTEXITCODE -ne 0) {
         throw "docker compose failed: $($ComposeArgs -join ' ')"
     }
@@ -99,7 +102,7 @@ function Restore-RollbackImages {
 
 try {
     Write-Host "Deploying Mini Telemetry Platform locally..."
-    Write-Host "Compose file: $composeFile"
+    Write-Host "Compose files: $composeFile + $localComposeFile"
 
     Save-RollbackImages
 

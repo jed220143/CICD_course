@@ -5,9 +5,11 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-$composeFile = Join-Path $repoRoot "infra\compose\compose.registry.yaml"
+$composeFile = Join-Path $repoRoot "infra\compose\compose.yaml"
 $healthUrl = "http://127.0.0.1:8080/api/health/ready"
+$env:APP_ENV = "production"
 $env:IMAGE_TAG = $ImageTag
+$env:POSTGRES_PASSWORD = "telemetry_dev_password"
 
 function Invoke-DockerCompose {
     param(

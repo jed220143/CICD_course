@@ -10,50 +10,51 @@
 
 | รายการ | ค่าที่ตรวจพบ |
 |---|---|
-| วันที่ตรวจ | 2026-07-13 (Preliminary check) |
+| วันที่ตรวจ | 2026-07-26 (ตรวจซ้ำก่อนเริ่ม EC2 Lab) |
 | วันที่สร้างบัญชีโดยประมาณ | 2026-07-13 |
 | Plan ที่เลือกตอนสมัคร | Free account plan |
 | Credit คงเหลือ | USD 100.00; ใช้แล้ว USD 0.00 |
 | วันหมดอายุ Credit | 2027-07-13 |
-| วันหมดอายุ Free plan | ต้องตรวจซ้ำจาก Billing Console ก่อน Phase 11 |
-| Region สำหรับ Lab |  |
-| ระยะเวลา EC2 Lab ที่วางแผน |  |
-| ค่าใช้จ่ายประมาณการก่อนใช้ Credit |  |
+| วันหมดอายุ Free plan | ประมาณ 2027-01-13 (6 เดือน); ต้องยืนยันวันที่จริงจาก Billing Console |
+| Region สำหรับ Lab | Asia Pacific (Singapore) `ap-southeast-1` |
+| ระยะเวลา EC2 Lab ที่วางแผน | ไม่เกิน 3 ชั่วโมงต่อรอบ แล้ว Terminate |
+| ค่าใช้จ่ายประมาณการก่อนใช้ Credit | ไม่เกิน USD 1 ต่อรอบสำหรับ EC2 + EBS + Public IPv4; ค่าเรียกเก็บจริง 0 บน Free account plan |
 
 ## Gate A — Account Safety
 
-สถานะปัจจุบัน: **ยังไม่ PASS** — บันทึกเครดิตเบื้องต้นแล้ว แต่ต้องตรวจ Account plan, วันหมดอายุ, MFA, Budget และ Billing ซ้ำก่อน Phase 11
+สถานะปัจจุบัน: **PASS สำหรับ EC2 Lab ที่ระบุเท่านั้น**
 
-- [ ] Billing Console แสดงว่าเป็น **Free account plan**
-- [ ] Console ระบุว่าจะไม่เกิดค่าใช้จ่ายจนกว่าจะ Upgrade
-- [ ] ยังไม่หมดระยะ Free plan และ Credit
-- [ ] Credit คงเหลือมากกว่าค่าใช้จ่ายประมาณการอย่างเพียงพอ
-- [ ] บัญชีไม่ได้อยู่ใน AWS Organizations
-- [ ] จะไม่ Upgrade เป็น Paid plan ระหว่างหลักสูตร
-- [ ] Root เปิด MFA แล้ว
-- [ ] เปิด Free Tier Usage Alert แล้ว
-- [ ] สร้าง Zero-spend/Cost Budget Alert แล้ว
+- [x] Billing Console แสดงว่าเป็น **Free account plan**
+- [x] Console ระบุว่าจะไม่เกิดค่าใช้จ่ายจนกว่าจะ Upgrade
+- [x] ยังไม่หมดระยะ Free plan และ Credit
+- [x] Credit คงเหลือ USD 100.00 และใช้แล้ว USD 0.00 ณ วันที่ตรวจ
+- [x] บัญชียังคงเป็น Free account plan จึงไม่ได้เข้าร่วม AWS Organizations
+- [x] จะไม่ Upgrade เป็น Paid plan ระหว่างหลักสูตร
+- [x] Root เปิด MFA แล้ว (ผู้เรียนยืนยันวันที่ 2026-07-25)
+- [x] สร้าง IAM user `cicd-learner`, เปิด MFA และทดสอบ Console login แล้ว (ไม่ใช้ Root ทำงานประจำ)
+- [x] เปิด Free Tier Usage Alert แล้ว (ยืนยันจาก Billing preferences วันที่ 2026-07-25)
+- [x] ไม่ใช้ Zero-spend Budget ตามการตัดสินใจของผู้เรียน; บัญชีเป็น Free account plan และจะตรวจ Billing/Credits ก่อน–หลัง Lab แทน
 
 ## Gate B — Resource Safety
 
-- [ ] ตรวจราคา EC2, EBS, Public IPv4 และ Data Transfer จากหน้า AWS ปัจจุบันแล้ว
-- [ ] ใช้เฉพาะ Service/Feature ที่ Free account plan อนุญาต
-- [ ] ไม่ใช้ NAT Gateway, RDS, EKS, Load Balancer หรือ Marketplace
-- [ ] ใช้ข้อมูลจำลอง ไม่มีข้อมูลจริงหรือ Secret ผ่าน Public HTTP
-- [ ] SSH จำกัด Source IP ของผู้เรียน
-- [ ] กำหนดเวลาจบ Lab และตั้ง Reminder แล้ว
-- [ ] มีคำสั่ง/ขั้นตอน Health Check และ Rollback
-- [ ] มี Destroy Checklist ครอบคลุม EC2, EBS, Snapshot และ Public/Elastic IP
-- [ ] Backup Artifact/เอกสารที่ต้องเก็บออกจาก AWS แล้ว
+- [x] ตรวจสิทธิ์ Free Tier ปัจจุบันของ EC2, EBS และเงื่อนไข Free account plan แล้ว
+- [x] ใช้เฉพาะ Service/Feature ที่ Free account plan อนุญาต
+- [x] ไม่ใช้ NAT Gateway, RDS, EKS, Load Balancer หรือ Marketplace
+- [x] ใช้ข้อมูลจำลอง ไม่มีข้อมูลจริงหรือ Secret ผ่าน Public HTTP
+- [x] SSH และพอร์ต Lab จำกัด Source IP ของผู้เรียน
+- [x] กำหนดเวลาจบ Lab ไม่เกิน 3 ชั่วโมงต่อรอบ
+- [x] มีคำสั่ง/ขั้นตอน Health Check และ Rollback
+- [x] มี Destroy Checklist ครอบคลุม EC2, EBS, Snapshot และ Public/Elastic IP
+- [x] Source และ image เก็บใน GitHub/GHCR แล้ว ไม่พึ่ง EC2 เป็นที่เก็บถาวร
 
 ## คำตัดสิน
 
-- [ ] **PASS** — ทำ AWS Hands-on ได้เฉพาะขอบเขตที่ระบุในเอกสารนี้
+- [x] **PASS** — ทำ AWS Hands-on ได้เฉพาะขอบเขตที่ระบุในเอกสารนี้
 - [ ] **LOCAL-ONLY** — ห้ามสร้าง AWS Resource และใช้ Local Simulation แทน
 
-**เหตุผลประกอบคำตัดสิน:**  
-**ผู้เรียนยืนยันก่อนสร้าง Resource:** [ ]  
-**วันที่ยืนยัน:**  
+**เหตุผลประกอบคำตัดสิน:** Free account plan, เครดิตเพียงพอ, MFA/สิทธิ์ผ่าน, EC2/EBS ที่เลือกมีป้าย Free tier eligible และจำกัด network จาก My IP
+**ผู้เรียนยืนยันก่อนสร้าง Resource:** [x]
+**วันที่ยืนยัน:** 2026-07-26
 
 ## Checklist หลัง AWS Lab
 

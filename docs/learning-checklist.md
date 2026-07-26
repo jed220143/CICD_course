@@ -20,13 +20,16 @@
 - [x] Phase 13: Merge เข้า `main` และสร้าง release tag `v0.2.0`
 - [x] Phase 14: Deploy จาก GHCR image tag `v0.2.0`
 - [x] Phase 15: Compose hardening แยก local-only ports/bind mount ไป `compose.local.yaml`
+- [x] Phase 16: AWS safety gate, IAM/MFA, EC2/SSH และติดตั้ง Docker Engine
+- [x] Compose cleanup: เหลือไฟล์หลัก 1 ไฟล์ + local override 1 ไฟล์
 
 ## Current Stack
 
-- `mini-telemetry-db`: PostgreSQL เก็บข้อมูลใน named volume
-- `mini-telemetry-api`: FastAPI รับ HTTP และ subscribe MQTT
-- `mini-telemetry-broker`: Mosquitto MQTT broker สำหรับ lab local
-- `mini-telemetry-simulator`: ส่งข้อมูล sensor จำลองทุก 5 วินาที
+- `db`: PostgreSQL เก็บข้อมูลใน named volume
+- `api`: FastAPI รับ HTTP และ subscribe MQTT
+- `broker`: Mosquitto MQTT broker สำหรับ lab
+- `simulator`: ส่งข้อมูล sensor จำลองทุก 5 วินาที
+- `nginx`: เส้นทางเข้าใช้งานหลักผ่าน host port `8080`
 
 ## Phase 7 Pass Criteria
 

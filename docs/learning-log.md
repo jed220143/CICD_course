@@ -288,3 +288,27 @@
 - `api` และ `db` มีสถานะ healthy
 - `/health/ready` ตอบ `database: ok`
 - ข้อมูล `sensor-001` ยังอยู่หลัง container recreate เพราะใช้ named volume เดิม
+
+## Session: 2026-07-26 — AWS Free Safety Gate และ EC2
+
+- ยืนยัน Free account plan และเครดิตเริ่มต้น USD 100
+- เปิด Root MFA และ Free Tier usage alert
+- สร้าง IAM user `cicd-learner` พร้อม MFA ผ่านกลุ่ม `cicd-lab`
+- ใช้ AWS managed policy `AmazonEC2FullAccess` แทน AdministratorAccess ทั้งบัญชี
+- Launch EC2 ใน Singapore (`ap-southeast-1`): Ubuntu 24.04 x86_64, `t3.small`, EBS `gp3` 12 GiB
+- จำกัด SSH และพอร์ต Lab `8080` ให้เข้าจาก My IP
+- สถานะปัจจุบัน: EC2 Running, status checks ผ่าน และ SSH ด้วย key pair สำเร็จ
+- ต้อง Terminate EC2/EBS และตรวจ Billing/Credits หลังจบ Lab
+
+### Repository audit ก่อน deploy AWS
+
+- รวม Compose จาก 4 ไฟล์เหลือไฟล์หลักกับ Local override รวม 2 ไฟล์
+- เอารหัส DB แบบ dev ออกจาก production Compose และบังคับรับจาก environment
+- ปรับ Local/Registry/Linux deploy scripts ให้ใช้ Compose หลักร่วมกัน
+- cache SQLAlchemy engine เพื่อ reuse connection pool
+- เพิ่ม MQTT reconnect loop เมื่อ broker ไม่พร้อมหรือการเชื่อมต่อหลุด
+- เปลี่ยน simulator image ให้รันด้วย non-root user
+- จำกัด `packages: write` เฉพาะ GitHub Actions publish job
+- อัปเดต GitHub Actions majors และ NGINX stable image
+- API tests ผ่าน 4 tests; Compose base/local validation และ script syntax ผ่าน
+- Local Docker daemon ปิดอยู่ จึงให้ CI build images และตรวจ runtime user หลัง push

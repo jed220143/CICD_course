@@ -1,6 +1,7 @@
 import json
 import logging
 import threading
+import time
 
 import paho.mqtt.client as mqtt
 
@@ -25,7 +26,6 @@ def start_subscriber() -> None:
 
 def _run_subscriber() -> None:
     settings = get_settings()
-    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="mini-telemetry-api")
 
     def on_connect(client: mqtt.Client, userdata, flags, reason_code, properties) -> None:
         logger.info("Connected to MQTT broker: %s", reason_code)
@@ -39,7 +39,18 @@ def _run_subscriber() -> None:
         except Exception:
             logger.exception("Failed to process telemetry message from topic=%s", message.topic)
 
-    client.on_connect = on_connect
-    client.on_message = on_message
-    client.connect(settings.mqtt_broker_host, settings.mqtt_broker_port, keepalive=60)
-    client.loop_forever()
+    while True:
+        try:
+            client = mqtt.Client(
+                mqtt.CallbackAPIVersion.VERSION2,
+                client_id="mini-telemetry-api",
+            )
+            client.on_connect = on_connect
+            client.on_message = on_message
+            client.connect(settings.mqtt_broker_host, settings.mqtt_broker_port, keepalive=60)
+            client.loop_forever()
+            logger.warning("MQTT loop stopped; reconnecting in 5 seconds")
+        except Exception:
+            logger.exception("MQTT subscriber failed; reconnecting in 5 seconds")
+
+        time.sleep(5)

@@ -120,6 +120,10 @@ deploy-local เดิม build image จาก source บนเครื่อ�
 
 คือ override สำหรับ dev/debug เช่นเปิด DB port ให้เครื่องเรา query ได้ หรือ bind mount `local-artifacts/` เพื่อดูไฟล์ runtime โดยไม่ปนกับ deploy config หลัก
 
+### ทำไมเคยมี Compose 4 ไฟล์ แล้วแก้เหลือ 2?
+
+ไฟล์ `compose.registry.yaml` และ `compose.aws.yaml` คัดลอกโครงสร้างระบบเกือบทั้งหมด ทำให้เสี่ยงแก้ไม่ครบและเข้าใจยาก จึงรวม release/AWS ไว้ใน `compose.yaml` แล้วใช้ environment เลือก image tag และ secret ส่วน `compose.local.yaml` มีเฉพาะ build, debug ports และ bind mount สำหรับ Local
+
 ## NGINX / Config / Production-minded
 
 ### NGINX config ขึ้น Git ปลอดภัยไหม?
@@ -139,3 +143,41 @@ deploy-local เดิม build image จาก source บนเครื่อ�
 ### `.toml` คืออะไร?
 
 TOML คือรูปแบบไฟล์ config คล้าย JSON/YAML ในโปรเจกต์เราใช้ `pyproject.toml` บอกชื่อ project, Python version, dependencies และ pytest config
+
+## AWS Account Safety
+
+### ทำไมตอนตั้ง MFA ต้องกรอกรหัส 2 ชุด ทั้งที่แอปมีรหัสเดียว?
+
+เป็นรหัสจาก Authenticator รายการเดียวกันแต่คนละรอบเวลา: กรอกรหัสปัจจุบันเป็น Code 1 รอประมาณ 30 วินาทีให้รหัสเปลี่ยน แล้วกรอกรหัสใหม่เป็น Code 2 เพื่อให้ AWS ตรวจว่าเวลาของอุปกรณ์ตรงและสร้างรหัสต่อเนื่องได้ถูกต้อง
+
+### ทำไมต้องสร้าง IAM user ทั้งที่ Root ก็ใช้งานได้?
+
+Root มีสิทธิ์ควบคุมทั้งบัญชีและควรใช้เฉพาะงานดูแลบัญชีที่จำเป็น ส่วนงานประจำให้ใช้ IAM user ที่ได้รับสิทธิ์เท่าที่งานต้องใช้ เพื่อลดความเสียหายหากรหัสผ่านหรือ session หลุด
+
+### `not authorized to perform ec2:DescribeInstances` คืออะไร?
+
+หมายถึง IAM user ยืนยันตัวตนและเข้า Console ได้แล้ว แต่ยังไม่มี policy ที่อนุญาตให้อ่านรายการ EC2 ในบทนี้ต้องตรวจว่า user อยู่ในกลุ่ม `cicd-lab` และกลุ่มมี `AmazonEC2FullAccess` จริง
+
+### ไฟล์ `.pem` คืออะไร และใช้ตอนใด?
+
+เป็นไฟล์ private key ฝั่งผู้ดูแลสำหรับพิสูจน์ตัวตนตอน SSH เข้า EC2 โดย public key คู่กันถูกใส่ไว้ในเครื่อง EC2 ตอนสร้าง instance จึงเข้าเครื่องได้โดยไม่ส่งรหัสผ่านผ่านเครือข่าย ห้ามแชร์หรือ commit `.pem` ลง Git
+
+### `WARNING: UNPROTECTED PRIVATE KEY FILE` คืออะไร?
+
+Windows พบว่าผู้ใช้อื่นมีสิทธิ์อ่าน private key จึงให้ SSH ปฏิเสธไฟล์เพื่อป้องกันการขโมยกุญแจ ต้องปิด inherited permissions และให้สิทธิ์อ่านเฉพาะ Windows user เจ้าของไฟล์ก่อนใช้
+
+### SSH จากบ้านต้องใช้ Public IP หรือ Private IP ของ EC2?
+
+ใช้ Public IPv4 หรือ Public DNS เพราะ Private IP เช่น `172.31.x.x` ใช้สื่อสารภายใน VPC และเครื่องที่บ้านเข้าถึงตรง ๆ ไม่ได้ Public IPv4 แบบ auto-assigned อาจเปลี่ยนหลัง Stop/Start จึงต้องตรวจ Console และแก้ SSH config ใหม่
+
+### AWS Lab นี้ต้องสร้าง Gateway เองไหม?
+
+ไม่ต้องสร้างเพิ่ม Default VPC มี Internet Gateway และ route สำหรับ public subnet อยู่แล้ว เราไม่ใช้ NAT Gateway เพราะไม่จำเป็นและมีค่าใช้จ่าย และไม่ใช้ API Gateway เพราะ NGINX container ทำหน้าที่รับ traffic และ reverse proxy ไป API ภายในระบบ
+
+### AWS API Gateway จำเป็นเมื่อใด?
+
+ใช้เมื่ออยากได้บริการกลางแบบ managed สำหรับเปิด API โดยไม่ดูแล reverse proxy เอง เช่น API ของ Lambda/serverless, การตรวจ API key/JWT, rate limit, quota, routing หลาย backend และเก็บ metrics กลาง ระบบปัจจุบันมี EC2 เครื่องเดียวและ NGINX ทำหน้าที่รับ API อยู่แล้วจึงยังไม่จำเป็น
+
+### AWS Lambda เหมาะกับงานแบบใด?
+
+เหมาะกับงาน event-driven ที่เริ่มเมื่อมี HTTP request, message, schedule หรือไฟล์ใหม่ ทำงานช่วงสั้นแล้วจบ และไม่ต้องดูแล server เอง เช่น webhook, resize รูป, scheduled cleanup และ API ขนาดเล็ก ไม่เหมาะกับ process ที่ต้องรันตลอดหรือเก็บ state ในเครื่อง เช่น MQTT subscriber ที่ต้องเชื่อมต่อค้างไว้

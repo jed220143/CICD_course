@@ -2,12 +2,14 @@
 
 บทนี้เตรียม deploy โดยดึง image จาก GitHub Container Registry แทนการ build จาก source บนเครื่อง deploy
 
-## New files
+## Files
 
 ```text
-infra/compose/compose.registry.yaml
+infra/compose/compose.yaml
 scripts/deploy-registry-local.ps1
 ```
+
+> ภายหลังรวม `compose.registry.yaml` กลับเข้าไฟล์หลักเพื่อลด config ซ้ำ โดยเลือก image tag ผ่าน environment แทน
 
 ## Command
 
