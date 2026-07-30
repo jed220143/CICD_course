@@ -1,3 +1,9 @@
+x-logging: &local-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   broker:
     ports:
@@ -22,3 +28,40 @@ services:
     image: mini-telemetry-simulator:dev
     volumes:
       - ../../local-artifacts/simulator:/app/out
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    restart: unless-stopped
+    logging: *local-logging
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - telemetry_net
+
+  grafana:
+    image: grafana/grafana:12.1.0
+    restart: unless-stopped
+    logging: *local-logging
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    networks:
+      - telemetry_net
+
+volumes:
+  prometheus_data:
+  grafana_data:

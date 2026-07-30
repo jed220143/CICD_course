@@ -23,6 +23,20 @@
 - [x] Phase 16: AWS safety gate, IAM/MFA, EC2/SSH และติดตั้ง Docker Engine
 - [x] Compose cleanup: เหลือไฟล์หลัก 1 ไฟล์ + local override 1 ไฟล์
 
+## In Progress
+
+- [x] Phase 13 observability: API เปิด Prometheus metrics
+- [x] Phase 13 observability: เพิ่ม Prometheus/Grafana ใน Local Compose
+- [x] Phase 13 observability: provision data source และ dashboard พื้นฐาน
+- [x] Phase 13 observability: รัน Local stack และยืนยัน Prometheus target `UP`
+- [x] Phase 13 observability: เปิด Grafana dashboard และดูข้อมูลเปลี่ยนตามระบบจริง
+- [x] Phase 13 observability: สร้าง DB readiness และ FastAPI CPU panels ด้วยตนเอง
+- [x] Phase 13 observability: หยุด/เปิด DB แล้วเห็น Dashboard เปลี่ยน `UP → DOWN → UP`
+- [x] Phase 13 log management: Request ID และ Docker log rotation
+- [x] Phase 13 backup: custom dump, catalog validation, size และ SHA256
+- [x] Phase 13 restore: restore ลง DB ทดสอบและตรวจข้อมูลสำเร็จ
+- [x] Phase 13 incident: DB outage report พร้อม Root Cause และ Prevention
+
 ## Current Stack
 
 - `db`: PostgreSQL เก็บข้อมูลใน named volume
