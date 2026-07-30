@@ -1,7 +1,14 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   broker:
     image: eclipse-mosquitto:2
     restart: unless-stopped
+    logging: *default-logging
     volumes:
       - ../mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     networks:
@@ -10,6 +17,7 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    logging: *default-logging
     environment:
       POSTGRES_DB: telemetry
       POSTGRES_USER: telemetry
@@ -27,6 +35,7 @@ services:
   api:
     image: ghcr.io/jed220143/mini-telemetry-api:${IMAGE_TAG:-v0.2.0}
     restart: unless-stopped
+    logging: *default-logging
     environment:
       APP_ENV: ${APP_ENV:-production}
       APP_PORT: 8000
@@ -52,6 +61,7 @@ services:
   simulator:
     image: ghcr.io/jed220143/mini-telemetry-simulator:${IMAGE_TAG:-v0.2.0}
     restart: unless-stopped
+    logging: *default-logging
     environment:
       MQTT_BROKER_HOST: broker
       MQTT_BROKER_PORT: 1883
@@ -70,6 +80,7 @@ services:
   nginx:
     image: nginx:1.30.4-alpine
     restart: unless-stopped
+    logging: *default-logging
     ports:
       - "8080:80"
     volumes:

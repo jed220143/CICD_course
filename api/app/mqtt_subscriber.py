@@ -6,6 +6,13 @@ import time
 import paho.mqtt.client as mqtt
 
 from app.config import get_settings
+from app.metrics import (
+    MQTT_INVALID_PAYLOADS,
+    MQTT_MESSAGES_RECEIVED,
+    TELEMETRY_DATABASE_FAILURES,
+    TELEMETRY_DUPLICATES,
+    TELEMETRY_INSERTED,
+)
 from app.telemetry import store_telemetry
 
 logger = logging.getLogger(__name__)
@@ -32,11 +39,24 @@ def _run_subscriber() -> None:
         client.subscribe(settings.mqtt_topic)
 
     def on_message(client: mqtt.Client, userdata, message: mqtt.MQTTMessage) -> None:
+        MQTT_MESSAGES_RECEIVED.inc()
+
         try:
             payload = json.loads(message.payload.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            MQTT_INVALID_PAYLOADS.inc()
+            logger.exception("Invalid MQTT payload from topic=%s", message.topic)
+            return
+
+        try:
             inserted = store_telemetry(payload)
+            if inserted:
+                TELEMETRY_INSERTED.inc()
+            else:
+                TELEMETRY_DUPLICATES.inc()
             logger.info("Telemetry message processed: inserted=%s topic=%s", inserted, message.topic)
         except Exception:
+            TELEMETRY_DATABASE_FAILURES.inc()
             logger.exception("Failed to process telemetry message from topic=%s", message.topic)
 
     while True:
